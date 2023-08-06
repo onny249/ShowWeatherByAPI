@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+
+    <style>
+        body {
+            background-image: url(bg-image.jpg);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+
+        }
+        #description{
+            font-size: 25px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <form action="" class="py-5 m-auto col-md-6">
+            <div class="input-group mb-3">
+                <input id="GivenCName" type="text" class="form-control" placeholder="RCity">
+                <button onclick="ShowWeather()" id="button" type="button" class="btn btn-danger">Search</button>
+            </div>
+
+        </form>
+
+        <div class="text-white text-center">
+            <img id="weather-icon" src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+            <h1 id="cityName">Which City?</h1>
+            <h3 id="temperature">00</h3>
+            <h3 id="description" class="lead">Clouds</h3>
+        </div>
+
+    </div>
+
+    <script>
+        function ShowWeather(){
+            const CityName = document.getElementById('GivenCName').value;
+
+                fetch('https://api.openweathermap.org/data/2.5/weather?q=' + CityName + '&appid=e251d4ed8586901a4ef993edada8c36f')
+                    .then(res => res.json())
+                    
+                    .then(data => {
+
+                        const ShowCity = data.name;
+                        const ShowTemp = data.main.temp;
+                        const CalTemp = ShowTemp - 273.15;
+                        const mainTemp = CalTemp.toFixed(2);
+                        const description = data.weather[0].description;
+                        document.getElementById('temperature').innerText = mainTemp + '°C';
+                        document.getElementById('cityName').innerText = ShowCity;
+                        document.getElementById('description').innerText = description;
+                        
+                      
+                    });
+
+        }
+        
+        
+    </script>
+
+</body>
+
+</html>
+
+<!-- const submitBtn = document.getElementById('button');
+            submitBtn.addEventListener('click', function () {
+                const CityName = document.getElementById('GivenCName').value;
+
+                fetch('https://api.openweathermap.org/data/2.5/weather?q=' + CityName + '&appid=e251d4ed8586901a4ef993edada8c36f')
+                    .then(res => res.json())
+                    .then(data => {
+
+                        const ShowCity = data.name;
+                        const ShowTemp = data.main.temp;
+                        const CalTemp = ShowTemp - 273.15;
+                        const mainTemp = CalTemp.toFixed(2);
+                        const description = data.weather[0].description;
+                        document.getElementById('temperature').innerText = mainTemp + '°C';
+                        document.getElementById('cityName').innerText = ShowCity;
+                        document.getElementById('description').innerText = description;
+                      
+                    });
+            }) -->
